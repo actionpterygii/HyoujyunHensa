@@ -26,6 +26,7 @@ namespace HH
         //keisann shi hyou ni matome x-p no gurafu wo kaku
 
 
+        // 0から100の値でテキストボックスへの数字入力でグラフを描画するんですね
         //textbox kara
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -45,9 +46,11 @@ namespace HH
         }
 
 
+        // グラフを描画するメインの部分
         //atai hyouji to gurafu byouga
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
+            // テキストボックスから取得
             textBox1.Text = trackBar1.Value.ToString();
             double n = trackBar1.Value;
 
@@ -57,36 +60,46 @@ namespace HH
             chart1.Series.Clear();
             chart1.ChartAreas.Clear();
             Series HHg = new Series();
+            // すぷラインでの描画指定なのかな
             HHg.ChartType = SeriesChartType.Spline;
             ChartArea area1 = new ChartArea();
+            // 色やね
             HHg.Color = Color.FromArgb(255, 0, 0, 220);
 
+            // x軸についての設定
             area1.AxisX.Maximum = 1;
             area1.AxisX.Minimum = 0;
             area1.AxisX.Interval = 0.2;
             area1.AxisX.MajorGrid.LineColor = Color.LightGray;
             area1.AxisX.MajorGrid.Interval = 0.05;
 
+            // y軸についての設定
             area1.AxisY.Maximum = 1;
             area1.AxisY.Minimum = 0;
             area1.AxisY.Interval = 0.2;
             area1.AxisY.MajorGrid.LineColor = Color.LightGray;
             area1.AxisY.MajorGrid.Interval = 0.05;
 
+            // 頑張って描画してそう 入力値分(x軸)の値でるからその分ループ的な
             for (double m = 0; m <= n; m++)
             {
+                // x軸の値は入力値分あるよね
                 double X = Convert.ToDouble(SG((m / n) * 1000.0) / 1000.0);
+                // nCm(nCr/組み合わせ)をだしているね 
                 double nCm = (KJ(n, 1)) / (KJ(m, 1) * KJ(n - m, 1));
+                // べき乗をだしているね
                 double drk = (Math.Pow(iti, m));
                 double dnk = (Math.Pow(igi, n - m));
+                // 上の値によってx軸の値だったね
                 double Y = nCm * drk * dnk;
                 HHg.Points.Add(new DataPoint(X, Y));
             }
+            // 反映してるっっぽい
             chart1.ChartAreas.Add(area1);
             chart1.Series.Add(HHg);
         }
 
-
+        // 階乗をけいさんするのですね！末尾再帰最適化じゃないですか！
         //kaijo suru yatu
         double KJ(double a, double i)
         {
@@ -100,14 +113,14 @@ namespace HH
             }
         }
 
-
+        // 四捨五入...
         //shisyagonyu suru yatu
         int SG(double b)
         {
             return (int)(b < 0.0 ? b - 0.5 : b + 0.5);
         }
 
-
+        //グラフをほぞんするんですね
         //hozon suru yatu
         private void button1_Click(object sender, EventArgs e)
         {
