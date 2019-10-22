@@ -1,3 +1,7 @@
+[![license-WPFTL](https://img.shields.io/badge/license-WTFPL-green)](http://www.wtfpl.net)
+
+```私的/商用利用、改変、再配布自由です```
+
 # 中心極限定理観察機
 サイコロを振って1の出る確率が1/6です。  
 n回サイコロを振って1の出る割合を考えます。  
